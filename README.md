@@ -53,14 +53,7 @@ This command launches the Electron application.
 4. **Configuration Management:**  
    Use the **Load Config** and **Save Config** buttons to manage your settings.
 
-## Contributing
-
-Contributions are welcome! If you have ideas or improvements, feel free to fork the repository and create a pull request. For major changes, please open an issue first to discuss your proposed changes.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
-This project was developed to help streamline the course selection process for students at Istanbul Technical University. Special thanks to all contributors and the open-source community.
+This project was developed to help streamline the course selection process for students at Istanbul Technical University.
