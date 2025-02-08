@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Course Selection Automation</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <body>
+    <h1>Course Selection Automation</h1>
+    <form id="courseForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" placeholder="Enter username" required>
+      <br />
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Enter password" required>
+      <br />
+      <label for="crns">CRNs (comma-separated):</label>
+      <input type="text" id="crns" placeholder="e.g., 22143,20568,22139" required>
+      <br />
+      <button type="submit">Start CRN</button>
+      <button type="button" id="loadConfig">Load Config</button>
+      <button type="button" id="saveConfig">Save Config</button>
+      <!-- Spinner for loading config (hidden by default) -->
+      <span id="loadingSpinner" class="spinner" style="display: none;"></span>
+    </form>
+    <div id="output"></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>

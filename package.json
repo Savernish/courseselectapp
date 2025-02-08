@@ -1,0 +1,46 @@
+{
+  "name": "electron-selenium-automation",
+  "version": "1.0.0",
+  "description": "An Electron project that integrates a Python Selenium script for course selection automation.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.yourdomain.electron-selenium-automation",
+    "files": [
+      "index.html",
+      "index.css",
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "selectcourse.py",
+      "config.json",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "path/to/your/python/dependencies/",
+        "to": "python",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}
