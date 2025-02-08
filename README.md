@@ -3,6 +3,7 @@
 Course Selection Automation is a desktop application designed to simplify and automate the process of selecting courses at Istanbul Technical University. This app automates most of the manual steps involved in course registration, making it easier for students to secure all the courses they need.
 
 ## Features
+![Ekran görüntüsü 2025-02-09 012739](https://github.com/user-attachments/assets/4a3c6115-6960-4b88-ac52-817e0528475d)
 
 - **Automated Course Selection:** Quickly and efficiently select courses by automating the process.
 - **Configuration Management:** Save and load your course selection configurations.
@@ -47,7 +48,8 @@ This command launches the Electron application.
 2. **Enter CRNs:**  
    Enter the Course Registration Numbers (CRNs) as a comma-separated list (e.g., `22143,20568,22139`).
 
-3. **Automate Course Selection:**  
+3. **Automate Course Selection:
+**  
    Click the **Start CRN** button to initiate the automation process.
 
 4. **Configuration Management:**  
