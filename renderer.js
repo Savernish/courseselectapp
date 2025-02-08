@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("");
     }
   
-    console.log("Renderer: DOM content loaded");
+    console.log("Renderer: Sayfa yüklendi");
   
     // On form submission, send username, password, and CRNs to start the Python process.
     form.addEventListener("submit", (event) => {
@@ -31,20 +31,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("password").value;
       const crnInput = document.getElementById("crns").value;
       const crns = crnInput.split(",").map(crn => crn.trim()).filter(crn => crn !== "");
-      console.log("Renderer: Submitting form with", { username, password, crns });
+      console.log("Renderer: Form gönderiliyor", { username, password, crns });
       window.electronAPI.startCRN({ username, password, crns });
     });
   
     // When "Load Config" is clicked, log the event and send the IPC message.
     loadButton.addEventListener("click", () => {
-      console.log("Renderer: Load Config button clicked");
+      console.log("Renderer: Ayarları Yükle butonuna tıklandı");
       loadingSpinner.style.display = "inline-block";
       window.electronAPI.loadConfig();
     });
   
     // When "Save Config" is clicked, collect the input values and send them to the main process.
     saveButton.addEventListener("click", () => {
-      console.log("Renderer: Save Config button clicked");
+      console.log("Renderer: Ayarları Kaydet butonuna tıklandı");
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
       const crnInput = document.getElementById("crns").value;
@@ -58,45 +58,44 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // When config loads successfully, update the fields and hide the spinner.
     window.electronAPI.onLoadConfigSuccess((data) => {
-      console.log("Renderer: Received config data:", data);
+      console.log("Renderer: Ayarlar alındı:", data);
       loadingSpinner.style.display = "none";
       try {
         const config = JSON.parse(data);
         document.getElementById("username").value = config.login.username;
         document.getElementById("password").value = config.login.password;
         document.getElementById("crns").value = config.crns.join(",");
-        addLog("Loaded config successfully.", "black");
+        addLog("Ayarlar başarıyla yüklendi.", "black");
       } catch (e) {
-        addLog(`Error parsing config: ${e}`, "red");
+        addLog(`Ayarlar okunurken hata oluştu: ${e}`, "red");
       }
     });
   
     window.electronAPI.onLoadConfigError((error) => {
-      console.error("Renderer: Error loading config:", error);
+      console.error("Renderer: Ayarlar yüklenirken hata:", error);
       loadingSpinner.style.display = "none";
-      addLog(`Error loading config: ${error}`, "red");
+      addLog(`Ayarlar yüklenirken hata: ${error}`, "red");
     });
   
     // When config is saved successfully.
     window.electronAPI.onSaveConfigSuccess((message) => {
-      console.log("Renderer: Config saved successfully:", message);
-      addLog(message, "lightgreen");
+      console.log("Renderer: Ayarlar başarıyla kaydedildi:", message);
+      addLog("Ayarlar başarıyla kaydedildi.", "lightgreen");
     });
   
     window.electronAPI.onSaveConfigError((error) => {
-      console.error("Renderer: Error saving config:", error);
-      addLog(`Error saving config: ${error}`, "red");
+      console.error("Renderer: Ayarlar kaydedilirken hata:", error);
+      addLog(`Ayarlar kaydedilirken hata: ${error}`, "red");
     });
   
     // Other IPC listeners for Python output, errors, etc.
     window.electronAPI.onCRNOutput((data) => {
-      addLog(`Output: ${data}`, "lightgreen");
+      addLog(`Çıktı: ${data}`, "lightgreen");
     });
     window.electronAPI.onCRNError((data) => {
-      addLog(`Error: ${data}`, "red");
+      addLog(`Hata: ${data}`, "red");
     });
     window.electronAPI.onCRNClose((code) => {
-      addLog(`Process finished with exit code: ${code}`, "yellow");
+      addLog(`İşlem sonlandı. Çıkış kodu: ${code}`, "yellow");
     });
   });
-  

@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Sayfa meta ayarları -->
     <meta charset="UTF-8" />
-    <title>Course Selection Automation</title>
+    <title>Ders Seçim Otomasyonu</title>
+    <!-- CSS dosyası bağlantısı -->
     <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
   <body>
-    <h1>Course Selection Automation</h1>
+    <!-- Ana başlık -->
+    <h1>Ders Seçim Otomasyonu</h1>
+    <!-- Ders seçim formu -->
     <form id="courseForm">
-      <label for="username">Username:</label>
-      <input type="text" id="username" placeholder="Enter username" required>
+      <!-- Kullanıcı adı alanı -->
+      <label for="username">Kullanıcı Adı:</label>
+      <input type="text" id="username" placeholder="Kullanıcı adınızı girin" required>
       <br />
-      <label for="password">Password:</label>
-      <input type="password" id="password" placeholder="Enter password" required>
+      <!-- Şifre alanı -->
+      <label for="password">Şifre:</label>
+      <input type="password" id="password" placeholder="Şifrenizi girin" required>
       <br />
-      <label for="crns">CRNs (comma-separated):</label>
-      <input type="text" id="crns" placeholder="e.g., 22143,20568,22139" required>
+      <!-- CRN giriş alanı -->
+      <label for="crns">CRN'ler (virgülle ayırın):</label>
+      <input type="text" id="crns" placeholder="Örnek: 22143,20568,22139" required>
       <br />
-      <button type="submit">Start CRN</button>
-      <button type="button" id="loadConfig">Load Config</button>
-      <button type="button" id="saveConfig">Save Config</button>
-      <!-- Spinner for loading config (hidden by default) -->
+      <!-- İşlem butonları -->
+      <button type="submit">CRN Başlat</button>
+      <button type="button" id="loadConfig">Ayarları Yükle</button>
+      <button type="button" id="saveConfig">Ayarları Kaydet</button>
+      <!-- Yükleme animasyonu -->
       <span id="loadingSpinner" class="spinner" style="display: none;"></span>
     </form>
+    <!-- Log çıktı alanı -->
     <div id="output"></div>
+    <!-- JavaScript dosyası -->
     <script src="renderer.js"></script>
   </body>
 </html>
