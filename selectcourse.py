@@ -9,47 +9,46 @@ import argparse
 import sys
 
 def startCRN(username, password, *crns):
-    print("Starting Selenium automation with username:", username, "and CRNs:", crns)
+    print("Selenium otomasyonu başlatılıyor. Kullanıcı adı:", username, "ve CRN'ler:", crns)
     web = webdriver.Chrome()
     web.maximize_window()
     web.get('https://obs.itu.edu.tr/ogrenci/DersKayitIslemleri/DersKayit')
     
-    # --- Login Section using provided credentials ---
+    # --- Giriş Bölümü ---
     name_field = web.find_element(By.XPATH, '//*[@id="ContentPlaceHolder1_tbUserName"]')
     name_field.send_keys(username)
-    print("Entered username:", username)
+    print("Kullanıcı adı girildi:", username)
     
     pwd_field = web.find_element(By.XPATH, '//*[@id="ContentPlaceHolder1_tbPassword"]')
     pwd_field.send_keys(password)
-    print("Entered password.")
+    print("Şifre girildi.")
     
     sbutton = web.find_element(By.XPATH, '//*[@id="ContentPlaceHolder1_btnLogin"]')
     sbutton.click()
-    print("Clicked login button.")
+    print("Giriş butonuna tıklandı.")
     
-    # --- Navigation to Course Selection ---
+    # --- Ders Seçim Sayfasına Navigasyon ---
     wait = WebDriverWait(web, 10)
     element = wait.until(EC.visibility_of_element_located(
         (By.XPATH, '//*[@id="page-wrapper"]/div[1]/div[2]/div[1]/ul/li[5]/a')
     ))
-    print("Found course selection navigation element.")
+    print("Ders seçim elementi bulundu.")
     link1 = web.find_element(By.XPATH, '//*[@id="page-wrapper"]/div[1]/div[2]/div[1]/ul/li[5]/a')
     link1.click()
     time.sleep(0.5)
 
     link2 = web.find_element(By.XPATH, '//*[@id="page-wrapper"]/div[1]/div[2]/div[4]/ul/li/div/ul/li[4]/a')
     link2.click()
-    print("Navigated to course selection form.")
+    print("Ders seçim formuna gidildi.")
 
-    # --- Filling The Form (runs continuously) ---
+    # --- Form Doldurma (sürekli çalışır) ---
     while True:
         base_xpath = '/html/body/div[1]/main/div[2]/div/div/div[3]/div[4]/div/form/div/div[{}]/div/input'
         for index, crn in enumerate(crns, start=1):
-            print(f"Processing CRN {crn} in field {index}")
+            print(f"CRN {crn}, alan {index} işleniyor")
             input_field = WebDriverWait(web, 10).until(
                 EC.element_to_be_clickable((By.XPATH, base_xpath.format(index)))
             )
-            # Clear the field before sending keys.
             web.execute_script("arguments[0].value = '';", input_field)
             input_field.send_keys(Keys.CONTROL + "a")
             input_field.send_keys(Keys.BACKSPACE)
@@ -58,17 +57,17 @@ def startCRN(username, password, *crns):
 
         submit_button = web.find_element(By.XPATH, '/html/body/div[1]/main/div[2]/div/div/div[3]/div[4]/div/form/button')
         submit_button.click()
-        print("Submitted the form.")
+        print("Form gönderildi.")
         time.sleep(random.uniform(1, 3))
 
 if __name__ == '__main__':
     try:
-        parser = argparse.ArgumentParser(description='Automate course selection using Selenium.')
-        parser.add_argument('username', type=str, help='Login username')
-        parser.add_argument('password', type=str, help='Login password')
-        parser.add_argument('crns', nargs='+', type=int, help='List of CRNs (separated by space)')
+        parser = argparse.ArgumentParser(description='Selenium ile ders seçim otomasyonu.')
+        parser.add_argument('username', type=str, help='Giriş kullanıcı adı')
+        parser.add_argument('password', type=str, help='Giriş şifresi')
+        parser.add_argument('crns', nargs='+', type=int, help='CRN listesi (boşlukla ayrılmış)')
         args = parser.parse_args()
-        print("Python script started with arguments:", sys.argv)
+        print("Python scripti başlatıldı, argümanlar:", sys.argv)
         startCRN(args.username, args.password, *args.crns)
     except Exception as e:
-        print("An error occurred:", e)
+        print("Bir hata oluştu:", e)

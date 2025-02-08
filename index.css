@@ -1,35 +1,30 @@
-/*--------------------------------------------------------------
-   CSS Variables for a Modern, Light Theme
---------------------------------------------------------------*/
+/* Ana tema değişkenleri */
 :root {
-    --primary: #3498db;          /* Fresh modern blue */
-    --secondary: #2980b9;        /* Deeper blue for hover effects */
-    --accent: #e74c3c;           /* Vibrant accent (used sparingly) */
-    --text-color: #333333;       /* Dark text for readability */
-    --success-color: #1e1e1e;     /* Even darker color for success messages */
-    --form-bg: #ffffff;          /* Crisp white for form background */
-    --border-color: #e0e0e0;      /* Light border color */
-    --input-bg: #f9f9f9;         /* Soft input background */
+    --primary: #3498db;        
+    --secondary: #2980b9;     
+    --accent: #e74c3c;         
+    --text-color: #333333;     
+    --success-color: #1e1e1e;   
+    --form-bg: #ffffff;       
+    --border-color: #e0e0e0;    
+    --input-bg: #f9f9f9;        
     --button-bg: var(--primary);
     --button-hover-bg: var(--secondary);
-    --output-bg: #ffffff;        /* White background for the log area */
+    --output-bg: #ffffff;       
     --font-family: 'Poppins', sans-serif;
   }
   
-  /*--------------------------------------------------------------
-     Import Fonts
-  --------------------------------------------------------------*/
+  /* Font importu */
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
   
-  /*--------------------------------------------------------------
-     Global Reset & Base Styles
-  --------------------------------------------------------------*/
+  /* Genel reset ve temel stiller */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
+  /* Ana sayfa stili */
   body {
     font-family: var(--font-family);
     background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
@@ -43,9 +38,7 @@
     padding: 20px;
   }
   
-  /*--------------------------------------------------------------
-     Animations
-  --------------------------------------------------------------*/
+  /* Animasyonlar */
   @keyframes fadeInDown {
     from {
       opacity: 0;
@@ -68,9 +61,7 @@
     }
   }
   
-  /*--------------------------------------------------------------
-     Headings
-  --------------------------------------------------------------*/
+  /* Başlık stili */
   h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
@@ -79,9 +70,7 @@
     animation: fadeInDown 0.7s ease-out forwards;
   }
   
-  /*--------------------------------------------------------------
-     Form Container (Static, Modern Look)
-  --------------------------------------------------------------*/
+  /* Form kutusu */
   form {
     background: var(--form-bg);
     border: 1px solid var(--border-color);
@@ -93,9 +82,7 @@
     animation: fadeInUp 0.7s ease-out forwards;
   }
   
-  /*--------------------------------------------------------------
-     Form Labels
-  --------------------------------------------------------------*/
+  /* Form etiketleri */
   label {
     font-size: 1rem;
     font-weight: 600;
@@ -104,9 +91,7 @@
     color: var(--text-color);
   }
   
-  /*--------------------------------------------------------------
-     Input Fields
-  --------------------------------------------------------------*/
+  /* Giriş alanları */
   input[type="text"],
   input[type="password"] {
     width: 100%;
@@ -130,9 +115,7 @@
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
   }
   
-  /*--------------------------------------------------------------
-     Button Styling
-  --------------------------------------------------------------*/
+  /* Buton stilleri */
   button {
     cursor: pointer;
     padding: 12px 25px;
@@ -170,9 +153,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
-  /*--------------------------------------------------------------
-     Spinner (for loading configuration)
-  --------------------------------------------------------------*/
+  /* Yükleme animasyonu */
   .spinner {
     width: 30px;
     height: 30px;
@@ -189,9 +170,7 @@
     100% { transform: rotate(360deg); }
   }
   
-  /*--------------------------------------------------------------
-     Output Log Area (Clearly Labeled & Improved for Readability)
-  --------------------------------------------------------------*/
+  /* Çıktı alanı */
   #output {
     margin-top: 20px;
     background: var(--output-bg);
@@ -210,7 +189,7 @@
     color: var(--text-color);
   }
   
-  /* Pseudo-element label for the log section */
+  /* Çıktı başlığı */
   #output::before {
     content: "Log:";
     display: block;
@@ -220,12 +199,8 @@
     font-size: 1.1rem;
   }
   
-  /*--------------------------------------------------------------
-     Loaded Config Success Message
-     (Make sure these messages use a darker color for better readability)
-  --------------------------------------------------------------*/
+  /* Başarılı işlem mesajı */
   .log-success {
     color: var(#1e1e1e);
     font-weight: 600;
   }
-  
