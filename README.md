@@ -1,4 +1,3 @@
-````markdown
 # Course Selection Automation
 
 Course Selection Automation is a desktop application designed to simplify and automate the process of selecting courses at Istanbul Technical University. This app automates most of the manual steps involved in course registration, making it easier for students to secure all the courses they need.
