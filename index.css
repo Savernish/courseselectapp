@@ -1,124 +1,231 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  /* Dynamic gradient background */
-  background: linear-gradient(135deg, rgba(26,42,108,0.9), rgba(178,31,31,0.9), rgba(253,187,45,0.9));
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-}
-
-form {
-  background: rgba(0, 0, 0, 0.65);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-  width: 90%;
-  max-width: 500px;
-}
-
-label {
-  font-weight: 600;
-  margin-bottom: 5px;
-  display: block;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0 15px 0;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus {
-  outline: none;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-}
-
-button {
-  cursor: pointer;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin: 10px 5px 0 0;
-  opacity: 0.95;
-}
-
-button:focus {
-  outline: none;
-}
-
-button:hover {
-  transform: scale(1.05);
-  opacity: 1;
-}
-
-button[type="submit"] {
-  background-color: #4caf50; /* Pleasant green */
-  color: #fff;
-}
-
-button[type="button"] {
-  background-color: #2196f3; /* Vibrant blue */
-  color: #fff;
-}
-
-/* Spinner for loading config */
-.spinner {
-  width: 30px;
-  height: 30px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top: 4px solid #fff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-left: 10px;
-  display: inline-block;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Log output area: limit height, transparency, and smooth scrolling */
-#output {
-  margin-top: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 15px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  font-size: 14px;
-  line-height: 1.5;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  max-height: 120px;
-  overflow-y: auto;
-}
+/*--------------------------------------------------------------
+   CSS Variables for a Modern, Light Theme
+--------------------------------------------------------------*/
+:root {
+    --primary: #3498db;          /* Fresh modern blue */
+    --secondary: #2980b9;        /* Deeper blue for hover effects */
+    --accent: #e74c3c;           /* Vibrant accent (used sparingly) */
+    --text-color: #333333;       /* Dark text for readability */
+    --success-color: #1e1e1e;     /* Even darker color for success messages */
+    --form-bg: #ffffff;          /* Crisp white for form background */
+    --border-color: #e0e0e0;      /* Light border color */
+    --input-bg: #f9f9f9;         /* Soft input background */
+    --button-bg: var(--primary);
+    --button-hover-bg: var(--secondary);
+    --output-bg: #ffffff;        /* White background for the log area */
+    --font-family: 'Poppins', sans-serif;
+  }
+  
+  /*--------------------------------------------------------------
+     Import Fonts
+  --------------------------------------------------------------*/
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  
+  /*--------------------------------------------------------------
+     Global Reset & Base Styles
+  --------------------------------------------------------------*/
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-family);
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    background-size: cover;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /*--------------------------------------------------------------
+     Animations
+  --------------------------------------------------------------*/
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /*--------------------------------------------------------------
+     Headings
+  --------------------------------------------------------------*/
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--primary);
+    animation: fadeInDown 0.7s ease-out forwards;
+  }
+  
+  /*--------------------------------------------------------------
+     Form Container (Static, Modern Look)
+  --------------------------------------------------------------*/
+  form {
+    background: var(--form-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.7s ease-out forwards;
+  }
+  
+  /*--------------------------------------------------------------
+     Form Labels
+  --------------------------------------------------------------*/
+  label {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+    color: var(--text-color);
+  }
+  
+  /*--------------------------------------------------------------
+     Input Fields
+  --------------------------------------------------------------*/
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--input-bg);
+    font-size: 16px;
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  input::placeholder {
+    color: #999999;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  }
+  
+  /*--------------------------------------------------------------
+     Button Styling
+  --------------------------------------------------------------*/
+  button {
+    cursor: pointer;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 10px 5px 0 0;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button[type="submit"] {
+    background-color: var(--button-bg);
+    color: #ffffff;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  button[type="button"] {
+    background-color: var(--secondary);
+    color: #ffffff;
+  }
+  
+  button[type="button"]:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /*--------------------------------------------------------------
+     Spinner (for loading configuration)
+  --------------------------------------------------------------*/
+  .spinner {
+    width: 30px;
+    height: 30px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+    display: inline-block;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /*--------------------------------------------------------------
+     Output Log Area (Clearly Labeled & Improved for Readability)
+  --------------------------------------------------------------*/
+  #output {
+    margin-top: 20px;
+    background: var(--output-bg);
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    font-size: 14px;
+    line-height: 1.5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    max-height: 120px;
+    overflow-y: auto;
+    position: relative;
+    animation: fadeInUp 0.7s ease-out forwards;
+    color: var(--text-color);
+  }
+  
+  /* Pseudo-element label for the log section */
+  #output::before {
+    content: "Log:";
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--secondary);
+    font-size: 1.1rem;
+  }
+  
+  /*--------------------------------------------------------------
+     Loaded Config Success Message
+     (Make sure these messages use a darker color for better readability)
+  --------------------------------------------------------------*/
+  .log-success {
+    color: var(#1e1e1e);
+    font-weight: 600;
+  }
+  

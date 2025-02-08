@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("username").value = config.login.username;
         document.getElementById("password").value = config.login.password;
         document.getElementById("crns").value = config.crns.join(",");
-        addLog("Loaded config successfully.", "lightblue");
+        addLog("Loaded config successfully.", "black");
       } catch (e) {
         addLog(`Error parsing config: ${e}`, "red");
       }
