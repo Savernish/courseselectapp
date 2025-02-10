@@ -55,10 +55,16 @@ def startCRN(username, password, *crns):
             web.execute_script("arguments[0].setAttribute('value', '')", input_field)
             input_field.send_keys(str(crn))
 
-        submit_button = web.find_element(By.XPATH, '/html/body/div[1]/main/div[2]/div/div/div[3]/div[4]/div/form/button')
-        submit_button.click()
+        #submit_button = web.find_element(By.XPATH, '/html/body/div[1]/main/div[2]/div/div/div[3]/div[4]/div/form/button')
+        #submit_button.click()
+        select_button = web.find_element(By.XPATH, '//*[@id="page-wrapper"]/div[2]/div/div/div[3]/div/form/button')
+        select_button.click()
+        time.sleep(2)
+
+        confirm_button = web.find_element(By.XPATH, '//*[@id="modals-container"]/div/div[2]/div/div[3]/button[2]')
+        confirm_button.click()
         print("Form gonderildi.")
-        time.sleep(random.uniform(1, 3))
+        time.sleep(3.5)
 
 if __name__ == '__main__':
     try:
