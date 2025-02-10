@@ -4,9 +4,18 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
+import datetime
 import time
 import argparse
 import sys
+
+# Define the target time
+target_time = datetime.datetime(2025, 2, 10, 11, 43, 10)
+
+# Custom expected condition that returns True when the current time reaches or exceeds the target
+def time_reached(driver):
+    return datetime.datetime.now() >= target_time
 
 def startCRN(username, password, *crns):
     print("Selenium otomasyonu baslatiliyor. Kullanici adi:", username, "ve CRN'ler:", crns)
@@ -37,11 +46,49 @@ def startCRN(username, password, *crns):
     link1.click()
     time.sleep(0.5)
 
-    link2 = web.find_element(By.XPATH, '//*[@id="page-wrapper"]/div[1]/div[2]/div[4]/ul/li/div/ul/li[4]/a')
+    link2 = web.find_element(By.XPATH, '//*[@id="page-wrapper"]/div[1]/div[2]/div[4]/ul/li/div/ul/li[2]/a')
     link2.click()
     print("Ders secim formuna gidildi.")
 
+    # Wait until the target time is reached (set timeout sufficiently high)
+    print("Waiting until target time is reached...")
+    WebDriverWait(web, timeout=3600, poll_frequency=1).until(time_reached)
+    print("Target time reached. Continuing with the script...")
+    web.refresh()
     # --- Form Doldurma (surekli calisir) ---
+
+    first_input_xpath = '/html/body/div[1]/main/div[2]/div/div/div[3]/div[4]/div/form/div/div[1]/div/input'
+
+    # Timing parameters
+    timeout = 30         # Total maximum wait time (in seconds)
+    refresh_interval = 3 # Refresh the page every 3 seconds if not visible
+
+    start_time = time.time()
+    last_refresh = start_time
+
+    while True:
+        try:
+            element = web.find_element(By.XPATH, first_input_xpath)
+            if element.is_displayed():
+                print("Element is visible!")
+                break  # The element is visible; exit the waiting loop.
+        except NoSuchElementException:
+            # The element is not present yet.
+            pass
+
+        # If more than `refresh_interval` seconds have passed, refresh the page.
+        if time.time() - last_refresh >= refresh_interval:
+            print("Element not visible yet. Refreshing page...")
+            web.refresh()
+            last_refresh = time.time()
+
+        # If we've waited longer than `timeout` seconds, stop waiting.
+        if time.time() - start_time > timeout:
+            raise Exception(f"Element not visible after waiting {timeout} seconds.")
+
+        time.sleep(0.5)  # Short sleep to avoid hammering the CPU
+
+    print("Content is visible. Starting the main loop...")
     while True:
         base_xpath = '/html/body/div[1]/main/div[2]/div/div/div[3]/div[4]/div/form/div/div[{}]/div/input'
         for index, crn in enumerate(crns, start=1):
@@ -57,7 +104,7 @@ def startCRN(username, password, *crns):
 
         #submit_button = web.find_element(By.XPATH, '/html/body/div[1]/main/div[2]/div/div/div[3]/div[4]/div/form/button')
         #submit_button.click()
-        select_button = web.find_element(By.XPATH, '//*[@id="page-wrapper"]/div[2]/div/div/div[3]/div/form/button')
+        select_button = web.find_element(By.XPATH, '//*[@id="page-wrapper"]/div[2]/div/div/div[4]/div/form/button[2]')
         select_button.click()
         time.sleep(2)
 
