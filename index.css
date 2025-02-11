@@ -1,31 +1,35 @@
 /* Ana tema değişkenleri */
 :root {
-    --primary: #3498db;        
-    --secondary: #2980b9;     
-    --accent: #e74c3c;         
-    --text-color: #333333;     
-    --success-color: #1e1e1e;   
-    --form-bg: #ffffff;       
-    --border-color: #e0e0e0;    
-    --input-bg: #f9f9f9;        
+    /* Modern vibrant color scheme */
+    --primary: #4361EE;        /* Vibrant blue */
+    --secondary: #3F37C9;      /* Deep purple-blue */
+    --accent: #FFBE0B;         /* Bright yellow */
+    --accent-hover: #FFD60B;   /* Lighter yellow */
+    --text-color: #2B2D42;     /* Dark navy */
+    --text-secondary: #6C757D; /* Modern gray */
+    --form-bg: #ffffff;
+    --border-color: #E9ECEF;
+    --input-bg: #F8F9FA;
     --button-bg: var(--primary);
     --button-hover-bg: var(--secondary);
-    --output-bg: #ffffff;       
-    --font-family: 'Poppins', sans-serif;
-  }
-  
-  /* Font importu */
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-  
-  /* Genel reset ve temel stiller */
-  * {
+    --output-bg: #ffffff;
+    --success-color: #06D6A0;  /* Mint green */
+    --error-color: #EF476F;    /* Bright pink-red */
+    --font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Modern font import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Genel reset ve temel stiller */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  /* Ana sayfa stili */
-  body {
+}
+
+/* Ana sayfa stili */
+body {
     font-family: var(--font-family);
     background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
     background-size: cover;
@@ -36,42 +40,58 @@
     justify-content: center;
     min-height: 100vh;
     padding: 20px;
-  }
-  
-  /* Animasyonlar */
-  @keyframes fadeInDown {
+}
+
+/* Animasyonlar */
+@keyframes fadeInDown {
     from {
-      opacity: 0;
-      transform: translateY(-20px);
+        opacity: 0;
+        transform: translateY(-20px);
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  @keyframes fadeInUp {
+}
+
+@keyframes fadeInUp {
     from {
-      opacity: 0;
-      transform: translateY(20px);
+        opacity: 0;
+        transform: translateY(20px);
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  /* Başlık stili */
-  h1 {
+}
+
+/* New animation for sliding in from right */
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Başlık stili */
+h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
-    color: var(--primary);
-    animation: fadeInDown 0.7s ease-out forwards;
-  }
-  
-  /* Form kutusu */
-  form {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+/* Form kutusu */
+form {
     background: var(--form-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -80,20 +100,20 @@
     max-width: 500px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     animation: fadeInUp 0.7s ease-out forwards;
-  }
-  
-  /* Form etiketleri */
-  label {
+}
+
+/* Form etiketleri */
+label {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 5px;
     display: block;
     color: var(--text-color);
-  }
-  
-  /* Giriş alanları */
-  input[type="text"],
-  input[type="password"] {
+}
+
+/* Giriş alanları */
+input[type="text"],
+input[type="password"] {
     width: 100%;
     padding: 12px;
     margin: 8px 0 20px 0;
@@ -103,20 +123,20 @@
     font-size: 16px;
     color: var(--text-color);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  input::placeholder {
+}
+
+input::placeholder {
     color: #999999;
-  }
-  
-  input:focus {
+}
+
+input:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-  }
-  
-  /* Buton stilleri */
-  button {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 190, 11, 0.15);
+}
+
+/* Buton stilleri */
+button {
     cursor: pointer;
     padding: 12px 25px;
     border: none;
@@ -125,36 +145,40 @@
     font-weight: 600;
     transition: background-color 0.3s ease, transform 0.2s ease;
     margin: 10px 5px 0 0;
-  }
-  
-  button:focus {
+}
+
+button:focus {
     outline: none;
-  }
-  
-  button[type="submit"] {
-    background-color: var(--button-bg);
+}
+
+button[type="submit"] {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: #ffffff;
-  }
-  
-  button[type="submit"]:hover {
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+button[type="submit"]:hover {
     background-color: var(--button-hover-bg);
     transform: translateY(-2px) scale(1.02);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  button[type="button"] {
-    background-color: var(--secondary);
-    color: #ffffff;
-  }
-  
-  button[type="button"]:hover {
-    background-color: var(--button-hover-bg);
+}
+
+button[type="button"] {
+    background: var(--accent);
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+button[type="button"]:hover {
+    background: var(--accent-hover);
+    color: var(--text-color);
     transform: translateY(-2px) scale(1.02);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Yükleme animasyonu */
-  .spinner {
+}
+
+/* Yükleme animasyonu */
+.spinner {
     width: 30px;
     height: 30px;
     border: 4px solid rgba(0, 0, 0, 0.1);
@@ -163,61 +187,88 @@
     animation: spin 1s linear infinite;
     margin-left: 10px;
     display: inline-block;
-  }
-  
-  @keyframes spin {
+}
+
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
-  
-  /* Çıktı alanı */
-  #output {
-    margin-top: 20px;
-    background: var(--output-bg);
-    padding: 15px;
+}
+
+/* Çıktı alanı */
+#output {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    margin: 0;
+    background: var(--form-bg);
+    padding: 12px;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
-    font-size: 14px;
-    line-height: 1.5;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    max-height: 120px;
+    border-radius: 8px;
+    width: 300px;
+    max-width: 30vw;
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
     overflow-y: auto;
-    position: relative;
-    animation: fadeInUp 0.7s ease-out forwards;
+    animation: fadeInRight 0.5s ease-out forwards;
     color: var(--text-color);
-  }
-  
-  /* Çıktı başlığı */
-  #output::before {
-    content: "Log:";
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Çıktı başlığı */
+#output::before {
+    content: "Log";
     display: block;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: var(--secondary);
-    font-size: 1.1rem;
-  }
-  
-  /* Başarılı işlem mesajı */
-  .log-success {
-    color: var(#1e1e1e);
-    font-weight: 600;
-  }
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
 
-  /* Zaman seçici stili */
-  .time-selector {
+/* Make log messages more compact */
+#output p {
+    margin: 2px 0;
+    padding: 2px 0;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+#output p:last-child {
+    border-bottom: none;
+}
+
+/* Responsive adjustment for the log */
+@media (max-width: 900px) {
+    #output {
+        position: static;
+        margin-top: 20px;
+        width: 90%;
+        max-width: 500px;
+    }
+}
+
+/* Başarılı işlem mesajı */
+.log-success {
+    color: var(--success-color);
+}
+
+/* Zaman seçici stili */
+.time-selector {
     display: grid;
     grid-template-columns: 1.5fr repeat(3, 1fr);
     gap: 8px;
     margin: 8px 0 20px 0;
-    background: var(--input-bg);
+    background: linear-gradient(to right, var(--input-bg), rgba(67, 97, 238, 0.05));
     padding: 12px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
-  }
-  
-  .time-selector input {
+}
+
+.time-selector input {
     padding: 10px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -227,55 +278,55 @@
     text-align: center;
     transition: all 0.3s ease;
     width: 100%;
-  }
-  
-  .time-selector input::placeholder {
+}
+
+.time-selector input::placeholder {
     color: #999;
     font-size: 14px;
-  }
-  
-  .time-selector input:focus {
+}
+
+.time-selector input:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 190, 11, 0.15);
     transform: translateY(-1px);
-  }
-  
-  .time-selector input::-webkit-inner-spin-button {
+}
+
+.time-selector input::-webkit-inner-spin-button {
     opacity: 1;
     height: 24px;
     cursor: pointer;
-  }
+}
 
-  .time-selector input[type="number"]::-webkit-inner-spin-button,
-  .time-selector input[type="number"]::-webkit-outer-spin-button {
+.time-selector input[type="number"]::-webkit-inner-spin-button,
+.time-selector input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
-  }
+}
 
-  .time-selector input[type="number"] {
+.time-selector input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
-  }
-  
-  .time-selector input:hover {
+}
+
+.time-selector input:hover {
     border-color: var(--primary);
-  }
-  
-  /* Responsive design for mobile */
-  @media (max-width: 600px) {
+}
+
+/* Responsive design for mobile */
+@media (max-width: 600px) {
     .time-selector {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
     
     .time-selector input {
-      font-size: 14px;
+        font-size: 14px;
     }
-  }
+}
 
-  /* Krediler bölümü */
-  .credits {
+/* Krediler bölümü */
+.credits {
     position: fixed;
     bottom: 20px;
     left: 20px;
@@ -283,20 +334,20 @@
     color: var(--text-secondary);
     opacity: 0.8;
     transition: opacity 0.3s ease;
-  }
+}
 
-  .credits:hover {
+.credits:hover {
     opacity: 1;
-  }
+}
 
-  .credits a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
-  }
-
-  .credits a:hover {
+.credits a {
     color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.credits a:hover {
+    color: var(--primary);
     text-decoration: underline;
-  }
+}
