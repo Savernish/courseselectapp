@@ -3,7 +3,8 @@
 Course Selection Automation is a desktop application designed to simplify and automate the process of selecting courses at Istanbul Technical University. This app automates most of the manual steps involved in course registration, making it easier for students to secure all the courses they need.
 
 ## Features
-![Ekran görüntüsü 2025-02-09 012739](https://github.com/user-attachments/assets/4a3c6115-6960-4b88-ac52-817e0528475d)
+![resim](https://github.com/user-attachments/assets/6988fa00-9299-40a7-bb0e-fdbb4090aef8)
+
 
 - **Automated Course Selection:** Quickly and efficiently select courses by automating the process.
 - **Configuration Management:** Save and load your course selection configurations.
@@ -22,9 +23,10 @@ Since the `node_modules` folder is not included in this repository (to keep the 
 
 2. **Install Dependencies:**
 
-   Ensure you have [Node.js](https://nodejs.org/) installed on your system. Then run:
+   Ensure you have [Node.js](https://nodejs.org/) and [Python](https://python.org/) installed on your system. Then run:
 
    ```bash
+   pip install selenium
    npm install
    ```
 
