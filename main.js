@@ -1,15 +1,18 @@
-// main.js
-const { app, BrowserWindow, ipcMain } = require('electron');
+// Ana işlem dosyası
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 const fs = require('fs');
 
+// Python işlemi için global değişken
 let pythonProcess = null;
 
+// Ana pencereyi oluştur
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    autoHideMenuBar: true,
+    width: 1200,
+    height: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true, 
@@ -19,19 +22,24 @@ function createWindow() {
   win.loadFile('index.html');
 }
 
-
 app.whenReady().then(() => {
   createWindow();
 
   console.log("Uygulama hazir. Ana pencere olusturuldu.");
 
+  // CRN başlatma olayını dinle
   ipcMain.on('start-crn', (event, data) => {
     console.log('IPC: start-crn olayi alindi, veri:', data);
-    const { username, password, crns } = data;
+    const { username, password, crns, targetTime } = data;
+    
+    // Convert targetTime object to JSON string for Python
+    const targetTimeStr = JSON.stringify(targetTime);
+
     pythonProcess = spawn('python', [
       path.join(__dirname, 'selectcourse.py'),
       username,
       password,
+      targetTimeStr,  // Add the target time argument
       ...crns
     ], {
       env: { ...process.env, PYTHONUNBUFFERED: '1' }
@@ -52,6 +60,7 @@ app.whenReady().then(() => {
     });
   });
 
+  // Ayarları yükleme olayını dinle
   ipcMain.on('load-config', (event) => {
     console.log("IPC: load-config olayi alindi.");
     const filePath = path.join(__dirname, 'config.json');
@@ -60,7 +69,13 @@ app.whenReady().then(() => {
         username: "username",
         password: "password"
       },
-      crns: [0, 0, 0, 0, 0, 0, 0]
+      crns: [0, 0, 0, 0, 0, 0, 0],
+      targetTime: {
+        date: "2025/02/11",
+        hour: "10",
+        minute: "00",
+        second: "00"
+      }
     };
 
     console.log("IPC: config.json araniyor:", filePath);
@@ -88,6 +103,7 @@ app.whenReady().then(() => {
     });
   });
 
+  // Ayarları kaydetme olayını dinle
   ipcMain.on('save-config', (event, configData) => {
     console.log("IPC: save-config olayi alindi, veri:", configData);
     const filePath = path.join(__dirname, 'config.json');
@@ -97,12 +113,18 @@ app.whenReady().then(() => {
         event.sender.send('save-config-error', err.toString());
       } else {
         console.log("IPC: Config basariyla kaydedildi.");
-        event.sender.send('save-config-success', "Yapilandirma basariyla kaydedildi.");
+        event.sender.send('save-config-success', "Yapılandırma başarıyla kaydedildi.");
       }
     });
   });
+
+  // Add handler for opening links in default browser
+  ipcMain.on('open-external-link', (event, url) => {
+    shell.openExternal(url);
+  });
 });
 
+// Tüm pencereler kapandığında uygulamayı sonlandır
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();

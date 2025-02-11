@@ -1,22 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Gerekli DOM elementlerini al
     const form = document.getElementById("courseForm");
     const outputDiv = document.getElementById("output");
     const loadButton = document.getElementById("loadConfig");
     const saveButton = document.getElementById("saveConfig");
     const loadingSpinner = document.getElementById("loadingSpinner");
   
-    // Array to hold the last 3 log messages
+    // Son 3 log mesajını tutacak dizi
     const logMessages = [];
   
-    // Utility function to add a log and keep only the last 3 messages
+    // Log ekleme ve son 3 mesajı tutma işlevi
     function addLog(message, color = "white") {
-      // Push the new message
+      // Yeni mesajı ekle
       logMessages.push({ message, color });
-      // Keep only the last 3 messages
+      // Sadece son 3 mesajı tut
       if (logMessages.length > 3) {
         logMessages.shift();
       }
-      // Update the output div
+      // Çıktı alanını güncelle
       outputDiv.innerHTML = logMessages
         .map(log => `<p style="color:${log.color}; margin: 4px 0;">${log.message}</p>`)
         .join("");
@@ -24,25 +25,52 @@ document.addEventListener("DOMContentLoaded", () => {
   
     console.log("Renderer: Sayfa yuklendi");
   
-    // On form submission, send username, password, and CRNs to start the Python process.
+    // Form gönderildiğinde, kullanıcı adı, şifre ve CRN'leri alarak Python sürecini başlat.
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
       const crnInput = document.getElementById("crns").value;
       const crns = crnInput.split(",").map(crn => crn.trim()).filter(crn => crn !== "");
-      console.log("Renderer: Form gonderiliyor", { username, password, crns });
-      window.electronAPI.startCRN({ username, password, crns });
+      
+      const targetTime = {
+        year: document.getElementById("targetDate").value.split("/")[0],
+        month: document.getElementById("targetDate").value.split("/")[1],
+        day: document.getElementById("targetDate").value.split("/")[2],
+        hour: document.getElementById("targetHour").value,
+        minute: document.getElementById("targetMinute").value,
+        second: document.getElementById("targetSecond").value
+      };
+
+      console.log("Renderer: Form gonderiliyor", { username, password, crns, targetTime });
+      window.electronAPI.startCRN({ username, password, crns, targetTime });
+    });
+
+    // Tarih girişi için otomatik biçimlendirme
+    const dateInput = document.getElementById("targetDate");
+    dateInput.addEventListener("input", function(e) {
+        // Sadece rakamları tut
+        let value = e.target.value.replace(/\D/g, ""); 
+        if (value.length > 8) value = value.slice(0, 8);
+        
+        // Eğik çizgileri otomatik ekle
+        if (value.length >= 4) {
+            value = value.slice(0, 4) + "/" + value.slice(4);
+        }
+        if (value.length >= 7) {
+            value = value.slice(0, 7) + "/" + value.slice(7);
+        }
+        e.target.value = value;
     });
   
-    // When "Load Config" is clicked, log the event and send the IPC message.
+    // "Load Config" tıklandığında, olayı logla ve IPC mesajını gönder.
     loadButton.addEventListener("click", () => {
       console.log("Renderer: Ayarlari Yukle butonuna tiklandi");
       loadingSpinner.style.display = "inline-block";
       window.electronAPI.loadConfig();
     });
   
-    // When "Save Config" is clicked, collect the input values and send them to the main process.
+    // "Save Config" tıklandığında, giriş değerlerini topla ve ana sürece gönder.
     saveButton.addEventListener("click", () => {
       console.log("Renderer: Ayarlari Kaydet butonuna tiklandi");
       const username = document.getElementById("username").value;
@@ -51,12 +79,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const crns = crnInput.split(",").map(crn => crn.trim()).filter(crn => crn !== "");
       const configData = {
         login: { username, password },
-        crns: crns.map(Number) // Convert CRNs to numbers
+        crns: crns.map(Number), // CRN'leri sayılara dönüştür
+        targetTime: {
+            date: document.getElementById("targetDate").value,
+            hour: document.getElementById("targetHour").value,
+            minute: document.getElementById("targetMinute").value,
+            second: document.getElementById("targetSecond").value
+        }
       };
       window.electronAPI.saveConfig(configData);
     });
   
-    // When config loads successfully, update the fields and hide the spinner.
+    // Ayarlar başarıyla yüklendiğinde, alanları güncelle ve spinner'ı gizle.
     window.electronAPI.onLoadConfigSuccess((data) => {
       console.log("Renderer: Ayarlar alindi:", data);
       loadingSpinner.style.display = "none";
@@ -65,6 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("username").value = config.login.username;
         document.getElementById("password").value = config.login.password;
         document.getElementById("crns").value = config.crns.join(",");
+        
+        // Zaman ayarlarını yükle
+        if (config.targetTime) {
+            document.getElementById("targetDate").value = config.targetTime.date || "";
+            document.getElementById("targetHour").value = config.targetTime.hour || "";
+            document.getElementById("targetMinute").value = config.targetTime.minute || "";
+            document.getElementById("targetSecond").value = config.targetTime.second || "";
+        }
+        
         addLog("Ayarlar başarıyla yüklendi.", "black");
       } catch (e) {
         addLog(`Ayarlar okunurken hata oluştu: ${e}`, "red");
@@ -77,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       addLog(`Ayarlar yüklenirken hata: ${error}`, "red");
     });
   
-    // When config is saved successfully.
+    // Ayarlar başarıyla kaydedildiğinde.
     window.electronAPI.onSaveConfigSuccess((message) => {
       console.log("Renderer: Ayarlar basariyla kaydedildi:", message);
       addLog("Ayarlar başarıyla kaydedildi.", "lightgreen");
@@ -88,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       addLog(`Ayarlar kaydedilirken hata: ${error}`, "red");
     });
   
-    // Other IPC listeners for Python output, errors, etc.
+    // Diğer IPC dinleyicileri için Python çıktısı, hatalar vb.
     window.electronAPI.onCRNOutput((data) => {
       addLog(`Çıktı: ${data}`, "lightgreen");
     });

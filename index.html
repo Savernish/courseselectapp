@@ -9,7 +9,7 @@
   </head>
   <body>
     <!-- Ana başlık -->
-    <h1>Ders Seçim Otomasyonu</h1>
+    <h1>OTOKON<br>Ders Seçim Otomasyonu</h1>
     <!-- Ders seçim formu -->
     <form id="courseForm">
       <!-- Kullanıcı adı alanı -->
@@ -24,6 +24,16 @@
       <label for="crns">CRN'ler (virgülle ayırın):</label>
       <input type="text" id="crns" placeholder="Örnek: 22143,20568,22139" required>
       <br />
+      
+      <!-- Tarih ve saat seçimi -->
+      <label for="targetTime">Hedef Tarih ve Saat:</label>
+      <div class="time-selector">
+        <input type="text" id="targetDate" placeholder="YYYY/MM/DD" required pattern="\d{4}/\d{2}/\d{2}">
+        <input type="number" id="targetHour" placeholder="Saat" min="0" max="23" required>
+        <input type="number" id="targetMinute" placeholder="Dakika" min="0" max="59" required>
+        <input type="number" id="targetSecond" placeholder="Saniye" min="0" max="59" required>
+      </div>
+      <br />
       <!-- İşlem butonları -->
       <button type="submit">CRN Başlat</button>
       <button type="button" id="loadConfig">Ayarları Yükle</button>
@@ -33,6 +43,10 @@
     </form>
     <!-- Log çıktı alanı -->
     <div id="output"></div>
+    <!-- Krediler -->
+    <div class="credits">
+      By <a href="#" onclick="window.electronAPI.openExternalLink('https://www.linkedin.com/in/enbiyacabuk'); return false;">Savernish</a>
+    </div>
     <!-- JavaScript dosyası -->
     <script src="renderer.js"></script>
   </body>
